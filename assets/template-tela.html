@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[Título da tela] · Protótipo Sankhya</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Cole aqui o conteúdo integral de assets/acorde-base.css.
+   O protótipo tem que ser um arquivo único e autossuficiente. */
+</style>
+</head>
+<body>
+
+<div class="sk-app">
+
+  <!-- Barra do produto: identifica onde o usuário está logado. -->
+  <header class="sk-topbar">
+    <div class="sk-topbar__brand">Sankhya</div>
+    <div class="sk-topbar__spacer"></div>
+    <div class="sk-topbar__meta">[Empresa] · [Usuário]</div>
+  </header>
+
+  <div class="sk-shell">
+
+    <!-- Navegação de módulos. Item ativo indica o contexto atual. -->
+    <nav class="sk-sidenav" aria-label="Módulos">
+      <div class="sk-sidenav__group">[Módulo]</div>
+      <a class="sk-sidenav__item is-active">[Tela atual]</a>
+      <a class="sk-sidenav__item">[Tela irmã]</a>
+    </nav>
+
+    <main class="sk-main">
+
+      <nav class="sk-breadcrumb" aria-label="Trilha de navegação">
+        <span>[Módulo]</span><span>[Tela atual]</span>
+      </nav>
+
+      <!-- Título responde "onde estou e que trabalho é este".
+           Um único CTA primário por tela. -->
+      <div class="sk-page-header">
+        <div>
+          <h1 class="sk-page-header__title">[Título orientado ao trabalho do usuário]</h1>
+          <p class="sk-page-header__desc">[Descrição em até 2 linhas: o que o usuário faz aqui.]</p>
+        </div>
+        <div class="sk-page-header__actions">
+          <button class="sk-btn sk-btn--secondary">[Ação secundária]</button>
+          <button class="sk-btn sk-btn--primary">[Verbo canônico] [entidade]</button>
+        </div>
+      </div>
+
+      <div class="sk-content">
+
+        <!-- ================= ESTADO: padrão ================= -->
+        <section data-estado="padrao" class="is-visible">
+
+          <div class="sk-toolbar">
+            <input class="sk-field__control" style="max-width:260px" placeholder="Buscar [entidade]">
+            <span class="sk-chip">[Filtro aplicado] <span class="sk-chip__remove">&times;</span></span>
+            <div class="sk-toolbar__spacer"></div>
+            <button class="sk-btn sk-btn--ghost sk-btn--sm">Limpar filtros</button>
+          </div>
+
+          <div class="sk-grid-wrap">
+            <table class="sk-grid">
+              <thead>
+                <tr>
+                  <!-- Label no vocabulário do usuário. Nome técnico só em comentário. -->
+                  <th>[Identificador]</th>       <!-- campo técnico: TODO validar no dicionário -->
+                  <th>[Parceiro / entidade]</th>
+                  <th>[Data]</th>
+                  <th class="sk-grid__num">[Valor]</th>
+                  <th>Situação</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="sk-grid__row">
+                  <td>[valor]</td>
+                  <td>[valor]</td>
+                  <td>[dd/mm/aaaa]</td>
+                  <td class="sk-grid__num">[0,00]</td>
+                  <td><span class="sk-tag sk-tag--aguardando">Aguardando aprovação</span></td>
+                  <td class="sk-grid__actions">
+                    <button class="sk-btn sk-btn--ghost sk-btn--sm">Abrir</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="sk-page-footer">
+            <span class="sk-muted">[N] [entidades] · página 1 de [N]</span>
+            <div class="sk-page-footer__actions">
+              <button class="sk-btn sk-btn--secondary sk-btn--sm" disabled>Anterior</button>
+              <button class="sk-btn sk-btn--secondary sk-btn--sm">Próxima</button>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ================= ESTADO: vazio (nunca houve dado) ================= -->
+        <section data-estado="vazio">
+          <div class="sk-grid-wrap">
+            <div class="sk-empty">
+              <div class="sk-empty__icon"></div>
+              <div class="sk-empty__title">Nenhum [entidade] cadastrado ainda</div>
+              <p class="sk-empty__text">Crie o primeiro [entidade] para começar.</p>
+              <button class="sk-btn sk-btn--primary">Criar [entidade]</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= ESTADO: filtro sem resultado ================= -->
+        <section data-estado="vazio-filtro">
+          <div class="sk-toolbar">
+            <span class="sk-chip">[Filtro aplicado] <span class="sk-chip__remove">&times;</span></span>
+            <div class="sk-toolbar__spacer"></div>
+            <button class="sk-btn sk-btn--ghost sk-btn--sm">Limpar filtros</button>
+          </div>
+          <div class="sk-grid-wrap">
+            <div class="sk-empty">
+              <div class="sk-empty__icon"></div>
+              <div class="sk-empty__title">[Entidade] não encontrada com esses filtros</div>
+              <p class="sk-empty__text">Ajuste os critérios ou limpe os filtros.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= ESTADO: carregando ================= -->
+        <section data-estado="carregando">
+          <div class="sk-grid-wrap" style="padding: var(--sk-space-3)">
+            <div class="sk-skeleton sk-skeleton--row"></div>
+            <div class="sk-skeleton sk-skeleton--row"></div>
+            <div class="sk-skeleton sk-skeleton--row"></div>
+            <div class="sk-skeleton sk-skeleton--row"></div>
+          </div>
+        </section>
+
+        <!-- ================= ESTADO: erro ================= -->
+        <section data-estado="erro">
+          <div class="sk-alert sk-alert--danger">
+            <div>
+              <div class="sk-alert__title">Não foi possível carregar [entidade]</div>
+              <div>Verifique sua conexão e tente novamente. Se o problema continuar, informe o administrador do sistema.</div>
+            </div>
+          </div>
+          <button class="sk-btn sk-btn--secondary">Tentar novamente</button>
+        </section>
+
+        <!-- ================= ESTADO: bloqueado (sem permissão) ================= -->
+        <section data-estado="bloqueado">
+          <div class="sk-grid-wrap">
+            <div class="sk-empty">
+              <div class="sk-empty__icon"></div>
+              <div class="sk-empty__title">Você não tem acesso a [entidade]</div>
+              <p class="sk-empty__text">Fale com o administrador do sistema para solicitar permissão.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= ESTADO: parcial ================= -->
+        <section data-estado="parcial">
+          <div class="sk-alert sk-alert--warning">
+            <div>
+              <div class="sk-alert__title">[N] de [N] [entidades] processados</div>
+              <div>[N] registros precisam de correção antes de continuar.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= ESTADO: sucesso ================= -->
+        <section data-estado="sucesso">
+          <div class="sk-alert sk-alert--success">
+            <div>
+              <div class="sk-alert__title">[Entidade] salvo com sucesso</div>
+              <div>[Próximo passo, quando houver.]</div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Modal de confirmação: título diz o que vai acontecer; CTA repete a entidade. -->
+<!--
+<div class="sk-modal-backdrop">
+  <div class="sk-modal" role="dialog" aria-modal="true" aria-labelledby="tituloModal">
+    <div class="sk-modal__header" id="tituloModal">Excluir [entidade] [identificador]?</div>
+    <div class="sk-modal__body">Esta ação não pode ser desfeita. [Consequência adicional, se houver.]</div>
+    <div class="sk-modal__footer">
+      <button class="sk-btn sk-btn--secondary">Cancelar</button>
+      <button class="sk-btn sk-btn--danger">Excluir [entidade]</button>
+    </div>
+  </div>
+</div>
+-->
+
+<!-- Seletor de estados: existe apenas no protótipo, não vai para produção. -->
+<div class="sk-state-switcher" id="seletorEstados">
+  <span class="sk-state-switcher__label">Estado da tela</span>
+</div>
+
+<script>
+  // Monta o seletor a partir dos blocos [data-estado] presentes na página,
+  // para que o revisor consiga validar todos os estados sem abrir vários arquivos.
+  (function () {
+    var rotulos = {
+      padrao: 'Padrão',
+      vazio: 'Vazio',
+      'vazio-filtro': 'Filtro sem resultado',
+      carregando: 'Carregando',
+      erro: 'Erro',
+      bloqueado: 'Sem permissão',
+      parcial: 'Parcial',
+      sucesso: 'Sucesso'
+    };
+    var blocos = Array.prototype.slice.call(document.querySelectorAll('[data-estado]'));
+    var seletor = document.getElementById('seletorEstados');
+
+    function mostrar(estado) {
+      blocos.forEach(function (bloco) {
+        bloco.classList.toggle('is-visible', bloco.dataset.estado === estado);
+      });
+      Array.prototype.forEach.call(seletor.querySelectorAll('button'), function (botao) {
+        botao.classList.toggle('is-active', botao.dataset.alvo === estado);
+      });
+    }
+
+    blocos.forEach(function (bloco) {
+      var estado = bloco.dataset.estado;
+      var botao = document.createElement('button');
+      botao.textContent = rotulos[estado] || estado;
+      botao.dataset.alvo = estado;
+      botao.addEventListener('click', function () { mostrar(estado); });
+      seletor.appendChild(botao);
+    });
+
+    if (blocos.length) { mostrar(blocos[0].dataset.estado); }
+  })();
+</script>
+
+</body>
+</html>
